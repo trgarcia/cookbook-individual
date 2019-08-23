@@ -12,7 +12,8 @@ feature 'Visitor visit homepage' do
   scenario 'Visitante visualiza receitas na pagina inicial' do
     #arrange
     recipe_type = RecipeType.create(name: 'Sobremesa')
-    recipe = Recipe.create(title:'Bolo de cenoura',recipe_type:recipe_type,cuisine:'Brasileira',
+    user = User.create(email:'user@email.com',password:'123465')
+    recipe = Recipe.create(title:'Bolo de cenoura',user: user, recipe_type:recipe_type,cuisine:'Brasileira',
                             difficulty:'Media',cook_time:60, ingredients:'dggwg', cook_method:'fwefwefew')
     #act
     visit root_path

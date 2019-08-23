@@ -3,9 +3,11 @@ require 'rails_helper'
 feature 'visitor see details of recipe' do
   scenario 'sucessifully' do
     recipe_type = RecipeType.create(name: 'Sobremesa')
+    user = User.create(email:'user@email.com',password:'123465')
     recipe = Recipe.create(title: 'Bolo de cenoura', recipe_type: recipe_type,
                            cuisine: 'Brasileira', difficulty: 'Medio',
                            cook_time: 60,
+                           user:user,
                            ingredients: 'Farinha, açucar, cenoura',
                            cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes')
 
@@ -22,9 +24,11 @@ feature 'visitor see details of recipe' do
   end
   scenario 'And return to recipe list'do
     recipe_type = RecipeType.create(name: 'Sobremesa')
+    user = User.create(email:'user@email.com',password:'123465')
     recipe = Recipe.create(title: 'Bolo de cenoura', recipe_type: recipe_type,
                          cuisine: 'Brasileira', difficulty: 'Medio',
                          cook_time: 60,
+                         user:user,
                          ingredients: 'Farinha, açucar, cenoura',
                          cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes')
 
