@@ -1,0 +1,11 @@
+
+<% @recipes.each do |recipe| %>
+  <h1><%= recipe.title %> </h1>
+  <p><%= recipe.recipe_type.name %> </p>
+  <p><%= recipe.cuisine %> </p>
+  <p><%= recipe.difficulty %> </p>
+  <p><%= "#{recipe.cook_time} minutos" %> </p>
+  <p><%= recipe.ingredients %> </p>
+  <p><%= recipe.cook_method %> </p>
+<% end %>
+<%= link_to 'Voltar', root_path %>
