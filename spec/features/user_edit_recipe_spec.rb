@@ -43,8 +43,49 @@ feature ' User edit a recipe' do
     expect(page).to have_css('p', text:'Laranja, massa')
     expect(page).to have_css('p', text:'Asse')
 
+  end
+
+  scenario 'and must to be signed in for edit recipe' do
+    recipe_type = RecipeType.create(name: 'Sobremesa')
+    user = User.create(email:'user@email.com', password:'123456')
+    recipe = Recipe.create(title: 'Bolo de cenoura', recipe_type: recipe_type,
+                           cuisine: 'Brasileira', difficulty: 'Medio',
+                           cook_time: 60,
+                           user: user,
+                           ingredients: 'Farinha, açucar, cenoura',
+                           cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes')
+
+    visit edit_recipe_path(recipe)
+
+    expect(current_path).to eq new_user_session_path
+
+  end
+
+  scenario 'just view button edit if is owner of recipe' do
+    recipe_type = RecipeType.create(name: 'Sobremesa')
+    user = User.create(email:'user@email.com', password:'123456')
+    recipe = Recipe.create(title: 'Bolo de cenoura', recipe_type: recipe_type,
+                           cuisine: 'Brasileira', difficulty: 'Medio',
+                           cook_time: 60,
+                           user: user,
+                           ingredients: 'Farinha, açucar, cenoura',
+                           cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes')
+
+    other = User.create(email:'other@email.com', password:'123456')
+    visit root_path
+
+    click_on 'Entrar'
+
+    within('form') do
+      fill_in 'Email', with:other.email
+      fill_in 'Senha', with:'123456'
+      click_on 'Entrar'
+    end
 
 
 
+    click_on recipe.title
+
+    expect(page).not_to have_link 'Editar'
   end
 end

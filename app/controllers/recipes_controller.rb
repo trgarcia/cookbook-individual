@@ -1,6 +1,6 @@
 class RecipesController < ApplicationController
   before_action :get_id, only: %i[show edit update]
-  before_action :authenticate_user! , only: %i[new create]
+  before_action :authenticate_user! , only: %i[new create edit update]
   def index
     @recipes = Recipe.all()
   end
@@ -11,8 +11,11 @@ class RecipesController < ApplicationController
       flash.now[:alert] = 'Receita nao encontrada'
     end
   end
-  def show
 
+  def show
+    @recipe_recipe_list = RecipeRecipeList.new
+    @recipe_lists = RecipeList.where(user: current_user)
+    @recipe_recipe_lists = RecipeRecipeList.where(recipe: @recipe)
   end
 
   def new
@@ -20,9 +23,9 @@ class RecipesController < ApplicationController
   end
 
   def create
-    @user = current_user
+
     @recipe = Recipe.new(set_params)
-    @recipe.user = @user
+    @recipe.user = current_user
 
     if @recipe.save
       redirect_to @recipe
@@ -39,6 +42,18 @@ class RecipesController < ApplicationController
   def update
     @recipe.update(set_params)
 
+    redirect_to @recipe
+  end
+
+  def user_recipes
+    @recipes = Recipe.where(user: current_user)
+  end
+
+  def add_to_list
+    @recipe = Recipe.find(params[:id])
+    @recipe_list = RecipeList.find(params[:recipe_recipe_list][:recipe_list_id])
+    RecipeRecipeList.create(recipe:@recipe, recipe_list:@recipe_list)
+    flash[:notice] = "Receita adicionada a lista #{@recipe_list.name}"
     redirect_to @recipe
   end
 

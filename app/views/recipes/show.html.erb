@@ -9,5 +9,22 @@
 <p><%= @recipe.ingredients %> </p>
 <p><%= @recipe.cook_method %> </p>
 
+<p>Essa receita pertence as listas: <p>
+<% @recipe_recipe_lists.each do |recipe_recipe_list| %>
+  <% if recipe_recipe_list.recipe_list.user == current_user %>
+    <p><%= recipe_recipe_list.recipe_list.name %></p>
+  <% end %>
+<% end %>
+
+<p>Adicionar a lista de receitas<p>
+<%= form_for @recipe_recipe_list, url: add_to_list_recipe_path do |f| %>
+  <%= f.label :recipe_list_id, 'Listas do usuario' %>
+  <%= f.collection_select( :recipe_list_id, @recipe_lists.all, :id, :name) %>
+  <%= f.submit 'Adicionar a lista' %>
+<% end %>
+<%=flash[:notice] %>
+
 <%= link_to 'Voltar', root_path %>
-<%= link_to 'Editar', edit_recipe_path %>
+<% if(current_user == @recipe.user) %>
+  <%= link_to 'Editar', edit_recipe_path %>
+<% end %>

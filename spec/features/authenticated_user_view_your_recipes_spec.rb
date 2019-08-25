@@ -4,21 +4,23 @@ feature 'Authenticated user view your recipes' do
 
   scenario 'sucessifully' do
     recipe_type = RecipeType.create(name: 'Sobremesa')
-    user = User.create(email:'user@email.com',password:'123465')
-    other = User.create(email:'other@email.com',password:'123465')
+
+    user = User.create(email: 'user@email.com', password:'123456')
+
     Recipe.create(title: 'Bolo de laranja', recipe_type: recipe_type,
                  cuisine: 'Brasileira', difficulty: 'Medio',
                  cook_time: 60,
                  user:user,
                  ingredients: 'Farinha, açucar, cenoura',
                  cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes')
+   other = User.create(email:'other@email.com',password:'123465')
+   Recipe.create(title: 'Bolo de cenoura', recipe_type: recipe_type,
+                 cuisine: 'Brasileira', difficulty: 'Medio',
+                 cook_time: 60,
+                 user:other,
+                 ingredients: 'Farinha, açucar, cenoura',
+                 cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes')
 
-    Recipe.create(title: 'Bolo de cenoura', recipe_type: recipe_type,
-                  cuisine: 'Brasileira', difficulty: 'Medio',
-                  cook_time: 60,
-                  user:other,
-                  ingredients: 'Farinha, açucar, cenoura',
-                  cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes')
 
     visit root_path
 
@@ -29,6 +31,7 @@ feature 'Authenticated user view your recipes' do
       fill_in 'Senha', with: '123456'
       click_on 'Entrar'
     end
+
 
     click_on 'Minhas receitas'
 
