@@ -2,8 +2,9 @@
 
 <% @recipe_lists.each do |recipe_list| %>
   <h1><%= recipe_list.name %></h1>
-  <% recipes = RecipeRecipeList.where(recipe_list:recipe_list)%>
-  <% recipes.each do |recipe| %>
+  <% @recipes = recipe_list.recipes%>
+  <% @recipes.each do |recipe| %>
     <p> <%= recipe.title %> </p>
+    
   <% end %>
 <% end %>

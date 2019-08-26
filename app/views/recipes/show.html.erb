@@ -2,6 +2,9 @@
 
 <h4><%= "Receita enviada por #{@recipe.user.email}" %>
 
+
+<p><%= image_tag @recipe.imagem %></p>
+
 <p><%= @recipe.recipe_type.name %> </p>
 <p><%= @recipe.cuisine %> </p>
 <p><%= @recipe.difficulty %> </p>
@@ -13,10 +16,16 @@
 <% @recipe_recipe_lists.each do |recipe_recipe_list| %>
   <% if recipe_recipe_list.recipe_list.user == current_user %>
     <p><%= recipe_recipe_list.recipe_list.name %></p>
+
   <% end %>
 <% end %>
 
+
+
+
+
 <p>Adicionar a lista de receitas<p>
+
 <%= form_for @recipe_recipe_list, url: add_to_list_recipe_path do |f| %>
   <%= f.label :recipe_list_id, 'Listas do usuario' %>
   <%= f.collection_select( :recipe_list_id, @recipe_lists.all, :id, :name) %>

@@ -5,6 +5,7 @@ Rails.application.routes.draw do
 
   resources :recipes, only: %i[show new create edit update] do
       post 'add_to_list', on: :member
+      delete 'delete_to_list', on: :member
     end
 
   resources :recipe_types, only: %i[show new create]

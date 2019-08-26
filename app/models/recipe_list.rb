@@ -4,7 +4,7 @@ class RecipeList < ApplicationRecord
   has_many :recipes, through: :recipe_recipe_lists
 
   validates :name, :user_id, presence: true
-  validates :name, uniqueness: true
+  validates :name,  uniqueness: true
 
 
 end

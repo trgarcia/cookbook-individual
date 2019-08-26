@@ -1,5 +1,5 @@
 class RecipesController < ApplicationController
-  before_action :get_id, only: %i[show edit update]
+  before_action :get_id, only: %i[show edit update add_to_list delete_to_list]
   before_action :authenticate_user! , only: %i[new create edit update]
   def index
     @recipes = Recipe.all()
@@ -14,7 +14,8 @@ class RecipesController < ApplicationController
 
   def show
     @recipe_recipe_list = RecipeRecipeList.new
-    @recipe_lists = RecipeList.where(user: current_user)
+    @recipe_lists = RecipeList.where(user: current_user )
+
     @recipe_recipe_lists = RecipeRecipeList.where(recipe: @recipe)
   end
 
@@ -50,17 +51,28 @@ class RecipesController < ApplicationController
   end
 
   def add_to_list
-    @recipe = Recipe.find(params[:id])
+
+
     @recipe_list = RecipeList.find(params[:recipe_recipe_list][:recipe_list_id])
-    RecipeRecipeList.create(recipe:@recipe, recipe_list:@recipe_list)
-    flash[:notice] = "Receita adicionada a lista #{@recipe_list.name}"
+
+
+    @recipe_recipe_list = RecipeRecipeList.new(recipe:@recipe, recipe_list:@recipe_list)
+    if @recipe_recipe_list.save
+      flash[:notice] = "Receita adicionada a lista #{@recipe_list.name}"
+    else
+      flash[:notice] = "Receita nao pode ser adicionada a lista #{@recipe_list.name}"
+    end
     redirect_to @recipe
+  end
+
+  def delete_to_list
+
   end
 
   private
 
   def set_params
-    params.require(:recipe).permit(:q, :title, :recipe_type_id, :cuisine, :difficulty, :cook_time, :ingredients, :cook_method)
+    params.require(:recipe).permit(:q, :imagem,  :title, :recipe_type_id, :cuisine, :difficulty, :cook_time, :ingredients, :cook_method)
   end
 
   def get_id
