@@ -2,7 +2,7 @@ require 'rails_helper'
 
 feature 'User register recipe' do
   scenario 'sucessifully' do
-    
+
     recipe_type = RecipeType.create(name: 'Sobremesa')
 
     user = User.create(email: 'user@email.com', password:'123456')
@@ -31,13 +31,10 @@ feature 'User register recipe' do
 
     click_on 'Enviar'
 
-    expect(page).to have_css('h1', text:'Bolo de laranja')
-    expect(page).to have_css('p', text:'Sobremesa')
-    expect(page).to have_css('p', text:'Brasileira')
-    expect(page).to have_css('p', text:'Medio')
-    expect(page).to have_css('p', text:"60 minutos")
-    expect(page).to have_css('p', text:'Laranja, massa')
-    expect(page).to have_css('p', text:'Asse')
+    visit root_path
+
+    expect(page).not_to have_css('h1', text:'Bolo de laranja')
+
   end
 
   scenario 'and must fill in all fields ' do

@@ -4,7 +4,7 @@ feature 'visitor see details of recipe' do
   scenario 'sucessifully' do
     recipe_type = RecipeType.create(name: 'Sobremesa')
     user = User.create(email:'user@email.com',password:'123465')
-    recipe = Recipe.create(title: 'Bolo de cenoura', recipe_type: recipe_type,
+    recipe = Recipe.create(status:1, title: 'Bolo de cenoura', recipe_type: recipe_type,
                            cuisine: 'Brasileira', difficulty: 'Medio',
                            cook_time: 60,
                            user:user,
@@ -25,7 +25,7 @@ feature 'visitor see details of recipe' do
   scenario 'And return to recipe list'do
     recipe_type = RecipeType.create(name: 'Sobremesa')
     user = User.create(email:'user@email.com',password:'123465')
-    recipe = Recipe.create(title: 'Bolo de cenoura', recipe_type: recipe_type,
+    recipe = Recipe.create(status:1, title: 'Bolo de cenoura', recipe_type: recipe_type,
                          cuisine: 'Brasileira', difficulty: 'Medio',
                          cook_time: 60,
                          user:user,
@@ -38,4 +38,6 @@ feature 'visitor see details of recipe' do
 
     expect(current_path).to eq(root_path)
   end
+
+  
 end

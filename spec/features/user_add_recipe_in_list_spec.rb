@@ -5,7 +5,7 @@ feature 'User add recipe in list' do
     user = User.create(email:'user@email.com', password:'123456')
     recipe_type = RecipeType.create(name: 'Sobremesa')
     RecipeList.create(name:'Churras',user:user)
-    recipe = Recipe.create(title: 'Bolo de cenoura', recipe_type: recipe_type,
+    recipe = Recipe.create(status:1, title: 'Bolo de cenoura', recipe_type: recipe_type,
                            cuisine: 'Brasileira', difficulty: 'Medio',
                            cook_time: 60,
                            user: user,

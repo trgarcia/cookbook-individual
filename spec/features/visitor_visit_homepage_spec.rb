@@ -13,7 +13,7 @@ feature 'Visitor visit homepage' do
     #arrange
     recipe_type = RecipeType.create(name: 'Sobremesa')
     user = User.create(email:'user@email.com',password:'123465')
-    recipe = Recipe.create(title:'Bolo de cenoura',user: user, recipe_type:recipe_type,cuisine:'Brasileira',
+    recipe = Recipe.create(status:1,title:'Bolo de cenoura',user: user, recipe_type:recipe_type,cuisine:'Brasileira',
                             difficulty:'Media',cook_time:60, ingredients:'dggwg', cook_method:'fwefwefew')
     #act
     visit root_path

@@ -2,7 +2,7 @@ class RecipesController < ApplicationController
   before_action :get_id, only: %i[show edit update add_to_list delete_to_list]
   before_action :authenticate_user! , only: %i[new create edit update]
   def index
-    @recipes = Recipe.all()
+    @recipes = Recipe.accepted()
   end
 
   def search
@@ -67,6 +67,17 @@ class RecipesController < ApplicationController
 
   def delete_to_list
 
+  end
+
+  def pendings
+    @pendings = Recipe.pending
+  end
+
+  def modified_status
+    byebug
+    @recipe.accepted!
+    flash.now[:notice] = "Receita aceita"
+    redirect_to :pendings
   end
 
   private
