@@ -16,6 +16,8 @@ describe 'get details of a recipe' do
 
     json_recipe = JSON.parse(response.body, simbolize_names:true)
 
-    expect(json_recipe[:title]).to eq recipe.title
+    expect(response.status).to eq 200
+
+    expect(json_recipe["title"]).to eq recipe.title
   end
 end

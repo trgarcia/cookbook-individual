@@ -1,6 +1,6 @@
 class RecipesController < ApplicationController
-  before_action :get_id, only: %i[show edit update add_to_list delete_to_list]
-  before_action :authenticate_user! , only: %i[new create edit update]
+  before_action :get_id, only: %i[show edit update add_to_list delete_to_list approve reject ]
+  before_action :authenticate_user! , only: %i[new create edit update pendings approve]
   def index
     @recipes = Recipe.accepted()
   end
@@ -13,6 +13,7 @@ class RecipesController < ApplicationController
   end
 
   def show
+
     @recipe_recipe_list = RecipeRecipeList.new
     @recipe_lists = RecipeList.where(user: current_user )
 
@@ -73,11 +74,16 @@ class RecipesController < ApplicationController
     @pendings = Recipe.pending
   end
 
-  def modified_status
-    byebug
+  def approve
     @recipe.accepted!
-    flash.now[:notice] = "Receita aceita"
-    redirect_to :pendings
+    flash[:notice] = "Receita aceita"
+    redirect_to pendings_path
+  end
+
+  def reject
+    @recipe.rejected!
+    flash[:notice] = "Receita rejeitada"
+    redirect_to pendings_path
   end
 
   private
