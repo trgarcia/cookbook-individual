@@ -3,10 +3,12 @@ require 'rails_helper'
 feature 'User add recipe in list' do
   scenario 'Successfully' do
     user = User.create(email:'user@email.com', password:'123456')
+    cuisine = Cuisine.create(name:'Brasileira')
+
     recipe_type = RecipeType.create(name: 'Sobremesa')
     RecipeList.create(name:'Churras',user:user)
     recipe = Recipe.create(status:1, title: 'Bolo de cenoura', recipe_type: recipe_type,
-                           cuisine: 'Brasileira', difficulty: 'Medio',
+                           cuisine: cuisine, difficulty: 'Medio',
                            cook_time: 60,
                            user: user,
                            ingredients: 'Farinha, açucar, cenoura',

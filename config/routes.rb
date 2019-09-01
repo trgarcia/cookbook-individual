@@ -14,7 +14,7 @@ Rails.application.routes.draw do
 
   resources :recipe_types, only: %i[show new create]
   resources :recipe_lists, only: %i[new create show]
-
+  resources :cuisines, only: %i[new create]
   get '/my_lists', to: 'recipe_lists#my_lists'
   get '/search', to: 'recipes#search'
   get '/user_recipes', to: 'recipes#user_recipes'
@@ -23,7 +23,14 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :recipes, only: %i[show]
+      resources :recipes, only: %i[show create destroy] do
+        member do
+          post 'accepted'
+          post 'rejected'
+        end
+      end
+      resources :recipe_types, only: %i[create show]
+      get '/recipes', to: 'recipes#recipes'
     end
   end
 

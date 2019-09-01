@@ -1,30 +1,28 @@
 require 'rails_helper'
 
-feature 'User delete recipe from recipe list' do
-  scenario 'Successfully' do
+describe 'Delete recipe' do
+  it 'Successfully' do
     user = User.create(email:'user@email.com', password:'123456')
     cuisine = Cuisine.create(name:'Brasileira')
 
-    recipe_type = RecipeType.create(name: 'Sobremesa')
-    RecipeList.create(name:'Churras',user:user)
-    recipe = Recipe.create(title: 'Bolo de cenoura', recipe_type: recipe_type,
+    recipe_type = RecipeType.create(name:'Sobremesa')
+
+    recipe = Recipe.create(status:1, title: 'Bolo de cenoura', recipe_type: recipe_type,
                            cuisine: cuisine, difficulty: 'Medio',
                            cook_time: 60,
                            user: user,
                            ingredients: 'Farinha, açucar, cenoura',
                            cook_method: 'Cozinhe a cenoura, corte em pedaços pequenos, misture com o restante dos ingredientes')
+    delete '/api/v1/recipes/1'
 
-    visit root_path
+    expect(response.status).to eq 301
+    expect(response.body).to include 'Receita deletada'
+  end
 
-    click_on 'Entrar'
+  it 'recipe must exist' do
+    delete '/api/v1/recipes/1'
 
-    within('form')do
-      fill_in 'Email', with:user.email
-      fill_in 'Senha', with:'123456'
-      click_on 'Entrar'
-    end
-
-    click_on 'Minhas listas de receitas'
-
+    expect(response.status).to eq 404
+    expect(response.body).to include 'Receita não existe'
   end
 end

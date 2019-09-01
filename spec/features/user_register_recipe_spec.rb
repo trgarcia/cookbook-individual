@@ -4,6 +4,7 @@ feature 'User register recipe' do
   scenario 'sucessifully' do
 
     recipe_type = RecipeType.create(name: 'Sobremesa')
+    Cuisine.create(name:'Brasileira')
 
     user = User.create(email: 'user@email.com', password:'123456')
 
@@ -23,7 +24,7 @@ feature 'User register recipe' do
 
     fill_in 'Titulo', with: 'Bolo de laranja'
     select 'Sobremesa', from: 'Tipo de receita'
-    fill_in 'Cozinha', with: 'Brasileira'
+    select 'Brasileira', from: 'Cozinha'
     fill_in 'Dificuldade', with: 'Medio'
     fill_in 'Tempo de preparo', with: 60
     fill_in 'Ingredientes', with: 'Laranja, massa'
@@ -40,6 +41,7 @@ feature 'User register recipe' do
   scenario 'and must fill in all fields ' do
     recipe_type = RecipeType.create(name: 'Sobremesa')
     user = User.create(email: 'user@email.com', password:'123456')
+    Cuisine.create(name:'Brasileira')
 
     visit root_path
 
@@ -55,8 +57,8 @@ feature 'User register recipe' do
 
     fill_in 'Titulo', with: 'Bolo de laranja'
     select 'Sobremesa', from: 'Tipo de receita'
-    fill_in 'Cozinha', with: ''
-    fill_in 'Dificuldade', with: 'Medio'
+    select 'Brasileira', from: 'Cozinha'
+    fill_in 'Dificuldade', with: ''
     fill_in 'Tempo de preparo', with: 60
     fill_in 'Ingredientes', with: 'Laranja, massa'
     fill_in 'Metodo de preparo', with: 'Asse'
@@ -77,6 +79,7 @@ feature 'User register recipe' do
   scenario ' Ao cadastrar receita deve ficar vinculada com o usuario' do
     recipe_type = RecipeType.create(name: 'Sobremesa')
     user = User.create(email: 'user@email.com', password:'123456')
+    Cuisine.create(name:'Brasileira')
 
     visit root_path
 
@@ -94,7 +97,7 @@ feature 'User register recipe' do
 
     fill_in 'Titulo', with: 'Bolo de laranja'
     select 'Sobremesa', from: 'Tipo de receita'
-    fill_in 'Cozinha', with: 'Brasileira'
+    select 'Brasileira', from: 'Cozinha'
     fill_in 'Dificuldade', with: 'Medio'
     fill_in 'Tempo de preparo', with: 60
     fill_in 'Ingredientes', with: 'Laranja, massa'

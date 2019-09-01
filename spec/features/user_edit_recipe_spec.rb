@@ -3,9 +3,11 @@ require 'rails_helper'
 feature ' User edit a recipe' do
   scenario ' Successfully' do
     recipe_type = RecipeType.create(name: 'Sobremesa')
+    cuisine = Cuisine.create(name:'Brasileira')
+
     user = User.create(email:'user@email.com', password:'123456')
     recipe = Recipe.create(status:1, title: 'Bolo de cenoura', recipe_type: recipe_type,
-                           cuisine: 'Brasileira', difficulty: 'Medio',
+                           cuisine: cuisine, difficulty: 'Medio',
                            cook_time: 60,
                            user: user,
                            ingredients: 'Farinha, açucar, cenoura',
@@ -27,7 +29,7 @@ feature ' User edit a recipe' do
 
     fill_in 'Titulo', with: 'Bolo de laranja'
     select 'Sobremesa', from: 'Tipo de receita'
-    fill_in 'Cozinha', with: 'Brasileira'
+    select 'Brasileira', from: 'Cozinha'
     fill_in 'Dificuldade', with: 'Medio'
     fill_in 'Tempo de preparo', with: 60
     fill_in 'Ingredientes', with: 'Laranja, massa'
@@ -47,9 +49,11 @@ feature ' User edit a recipe' do
 
   scenario 'and must to be signed in for edit recipe' do
     recipe_type = RecipeType.create(name: 'Sobremesa')
+    cuisine = Cuisine.create(name:'Brasileira')
+
     user = User.create(email:'user@email.com', password:'123456')
     recipe = Recipe.create(title: 'Bolo de cenoura', recipe_type: recipe_type,
-                           cuisine: 'Brasileira', difficulty: 'Medio',
+                           cuisine: cuisine, difficulty: 'Medio',
                            cook_time: 60,
                            user: user,
                            ingredients: 'Farinha, açucar, cenoura',
@@ -63,9 +67,11 @@ feature ' User edit a recipe' do
 
   scenario 'just view button edit if is owner of recipe' do
     recipe_type = RecipeType.create(name: 'Sobremesa')
+    cuisine = Cuisine.create(name:'Brasileira')
+
     user = User.create(email:'user@email.com', password:'123456')
     recipe = Recipe.create(status: 1 , title: 'Bolo de cenoura', recipe_type: recipe_type,
-                           cuisine: 'Brasileira', difficulty: 'Medio',
+                           cuisine: cuisine, difficulty: 'Medio',
                            cook_time: 60,
                            user: user,
                            ingredients: 'Farinha, açucar, cenoura',

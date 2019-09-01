@@ -3,10 +3,10 @@ require 'rails_helper'
 feature ' Admin view pendings recipes ' do
   scenario ' Successfully' do
     admin = User.create(email:'admin@email.com', password:'123456', admin:true)
-
+    cuisine = Cuisine.create(name:'Brasileira')
     recipe_type = RecipeType.create(name: 'Sobremesa')
     recipe = Recipe.create(title: 'Bolo de cenoura', recipe_type: recipe_type,
-                         cuisine: 'Brasileira', difficulty: 'Medio',
+                         cuisine: cuisine, difficulty: 'Medio',
                          cook_time: 60,
                          user:admin,
                          ingredients: 'Farinha, açucar, cenoura',
@@ -32,10 +32,11 @@ feature ' Admin view pendings recipes ' do
   end
   scenario ' and admin accepted recipe' do
     admin = User.create(email:'admin@email.com', password:'123456', admin:true)
+    cuisine = Cuisine.create(name:'Brasileira')
 
     recipe_type = RecipeType.create(name: 'Sobremesa')
     recipe = Recipe.create(title: 'Bolo de cenoura', recipe_type: recipe_type,
-                         cuisine: 'Brasileira', difficulty: 'Medio',
+                         cuisine: cuisine, difficulty: 'Medio',
                          cook_time: 60,
                          user:admin,
                          ingredients: 'Farinha, açucar, cenoura',
@@ -64,10 +65,11 @@ feature ' Admin view pendings recipes ' do
 
   scenario ' and admin reject pendent recipe' do
     admin = User.create(email:'admin@email.com', password:'123456', admin:true)
+    cuisine = Cuisine.create(name:'Brasileira')
 
     recipe_type = RecipeType.create(name: 'Sobremesa')
     recipe = Recipe.create(title: 'Bolo de cenoura', recipe_type: recipe_type,
-                         cuisine: 'Brasileira', difficulty: 'Medio',
+                         cuisine: cuisine, difficulty: 'Medio',
                          cook_time: 60,
                          user:admin,
                          ingredients: 'Farinha, açucar, cenoura',

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_27_113224) do
+ActiveRecord::Schema.define(version: 2019_09_01_150720) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -31,6 +31,12 @@ ActiveRecord::Schema.define(version: 2019_08_27_113224) do
     t.string "checksum", null: false
     t.datetime "created_at", null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
+  create_table "cuisines", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "recipe_lists", force: :cascade do |t|
@@ -58,7 +64,6 @@ ActiveRecord::Schema.define(version: 2019_08_27_113224) do
 
   create_table "recipes", force: :cascade do |t|
     t.string "title"
-    t.string "cuisine"
     t.string "difficulty"
     t.integer "cook_time"
     t.datetime "created_at", null: false
@@ -68,6 +73,8 @@ ActiveRecord::Schema.define(version: 2019_08_27_113224) do
     t.integer "recipe_type_id"
     t.integer "user_id"
     t.integer "status", default: 0
+    t.integer "cuisine_id"
+    t.index ["cuisine_id"], name: "index_recipes_on_cuisine_id"
     t.index ["recipe_type_id"], name: "index_recipes_on_recipe_type_id"
     t.index ["user_id"], name: "index_recipes_on_user_id"
   end

@@ -1,4 +1,6 @@
 class RecipeTypesController < ApplicationController
+  before_action :authenticate_user!, only: %i[new create]
+  before_action :is_admin?, only: %i[new create]
   def new
     @recipe_type = RecipeType.new
   end
@@ -26,5 +28,11 @@ class RecipeTypesController < ApplicationController
 
   def set_params
     params.require(:recipe_type).permit(:name)
+  end
+
+  def is_admin?
+    if !current_user.admin
+      redirect_to root_path
+    end
   end
 end

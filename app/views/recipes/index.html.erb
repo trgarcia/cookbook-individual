@@ -1,18 +1,22 @@
 <h1>CookBook</h1>
 <p>Bem-vindo ao maior livro de receitas online</p>
-<%= flash[:notice] %>
+<%= flash[:notices] %>
+<%= flash[:cuisine] %>
 <%= render 'search_form' %>
 
-<h3><%= link_to 'Cadastrar Receita', new_recipe_path %></h3>
-<h3><%= link_to 'Cadastrar tipo de receita', new_recipe_type_path %></h3>
+
+
 
 <% if user_signed_in? %>
   <h3><%= link_to 'Sair', destroy_user_session_path, method: :delete %></h3>
+  <h3><%= link_to 'Cadastrar Receita', new_recipe_path %></h3>
   <h3><%= link_to 'Minhas receitas', user_recipes_path %></h3>
   <h3><%= link_to 'Criar lista de receitas', new_recipe_list_path %></h3>
   <h3><%= link_to 'Minhas listas de receitas', my_lists_path %></h3>
   <%if current_user.admin == true %>
     <h3><%= link_to 'Receitas pendentes', pendings_path %></h3>
+    <h3><%= link_to 'Cadastrar tipo de receita', new_recipe_type_path %></h3>
+    <h3><%= link_to 'Cadastrar cozinha', new_cuisine_path%></h3>
   <% end %>
 <% else %>
   <h3><%= link_to 'Entrar', new_user_session_path %></h3>
@@ -22,7 +26,7 @@
 <h1><%= link_to recipe.title, recipe %></h1>
 <ul>
   <li><%= recipe.recipe_type.name %></li>
-  <li><%= recipe.cuisine %></li>
+  <li><%= recipe.cuisine.name %></li>
   <li><%= recipe.difficulty %></li>
   <li><%= "#{recipe.cook_time}minutos" %></li>
 </ul>

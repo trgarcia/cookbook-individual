@@ -2,10 +2,13 @@ require 'rails_helper'
 
 feature 'visitor see details of recipe' do
   scenario 'sucessifully' do
+
+    cuisine = Cuisine.create(name:'Brasileira')
+
     recipe_type = RecipeType.create(name: 'Sobremesa')
     user = User.create(email:'user@email.com',password:'123465')
     recipe = Recipe.create(status:1, title: 'Bolo de cenoura', recipe_type: recipe_type,
-                           cuisine: 'Brasileira', difficulty: 'Medio',
+                           cuisine: cuisine, difficulty: 'Medio',
                            cook_time: 60,
                            user:user,
                            ingredients: 'Farinha, açucar, cenoura',
@@ -16,7 +19,7 @@ feature 'visitor see details of recipe' do
 
     expect(page).to have_css('h1', text:recipe.title)
     expect(page).to have_css('p', text:recipe.recipe_type.name)
-    expect(page).to have_css('p', text:recipe.cuisine)
+    expect(page).to have_css('p', text:recipe.cuisine.name)
     expect(page).to have_css('p', text:recipe.difficulty)
     expect(page).to have_css('p', text:"#{recipe.cook_time} minutos")
     expect(page).to have_css('p', text:recipe.ingredients)
@@ -24,9 +27,11 @@ feature 'visitor see details of recipe' do
   end
   scenario 'And return to recipe list'do
     recipe_type = RecipeType.create(name: 'Sobremesa')
+    cuisine = Cuisine.create(name:'Brasileira')
+
     user = User.create(email:'user@email.com',password:'123465')
     recipe = Recipe.create(status:1, title: 'Bolo de cenoura', recipe_type: recipe_type,
-                         cuisine: 'Brasileira', difficulty: 'Medio',
+                         cuisine: cuisine, difficulty: 'Medio',
                          cook_time: 60,
                          user:user,
                          ingredients: 'Farinha, açucar, cenoura',
@@ -39,5 +44,5 @@ feature 'visitor see details of recipe' do
     expect(current_path).to eq(root_path)
   end
 
-  
+
 end
