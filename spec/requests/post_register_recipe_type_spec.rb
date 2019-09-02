@@ -5,6 +5,7 @@ describe 'Post register recipe type 'do
 
     user = User.create(email:'user@email.com', password:'123456')
 
+
     sign_in user
 
 

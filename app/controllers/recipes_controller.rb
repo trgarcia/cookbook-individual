@@ -1,6 +1,6 @@
 class RecipesController < ApplicationController
-  before_action :get_id, only: %i[show edit update add_to_list delete_to_list approve reject ]
-  before_action :authenticate_user! , only: %i[new create edit update pendings approve]
+  before_action :get_id, only: %i[show edit update add_to_list delete_to_list approve reject destroy ]
+  before_action :authenticate_user! , only: %i[new create edit update pendings approve destroy]
   def index
     @recipes = Recipe.accepted()
   end
@@ -45,6 +45,16 @@ class RecipesController < ApplicationController
     @recipe.update(set_params)
 
     redirect_to @recipe
+  end
+
+  def destroy
+    if current_user == @recipe.user
+      @recipe.destroy
+      flash[:notice] = "Receita apagada"
+      redirect_to user_recipes_path
+    else
+      redirect_to root_path
+    end
   end
 
   def user_recipes
@@ -95,6 +105,7 @@ class RecipesController < ApplicationController
   def get_id
     @recipe = Recipe.find(params[:id])
   end
+
 
 
 end
