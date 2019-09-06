@@ -10,6 +10,23 @@
   </head>
 
   <body>
+    <center>
+      <nav>
+        <ul id="nave">
+          <li><%= link_to 'Inicio', root_path %></li>
+          <% if user_signed_in? %>
+
+            <li><%= link_to 'Cadastrar Receita', new_recipe_path %></li>
+            <li><%= link_to 'Minhas receitas', user_recipes_path %></li>
+            <li><%= link_to 'Sair', destroy_user_session_path, method: :delete %></li>
+
+          <% else %>
+            <li><%= link_to 'Entrar', new_user_session_path %></li>
+          <% end %>
+        </ul>
+      </nav>
+    </center>
+
     <h4><%= flash[:alert] %></h4>
     <%= yield %>
   </body>

@@ -8,9 +8,11 @@ feature ' User sign_in ' do
 
     click_on 'Entrar'
 
-    fill_in 'Email', with: 'user@email.com'
-    fill_in 'Senha', with: '123456'
-    click_on 'Entrar'
+    within("form") do
+      fill_in 'Email', with: 'user@email.com'
+      fill_in 'Senha', with: '123456'
+      click_on 'Entrar'
+    end
 
     expect(current_path).to eq root_path
     expect(page).to have_content 'Sair'
